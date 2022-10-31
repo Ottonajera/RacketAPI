@@ -1,0 +1,237 @@
+<nav id="navbar">
+    <header>Racket Documentation</header>
+    <ul>
+        <li>
+            <a class="nav-link" href="#Welcome_to_Racket">Welcome to Racket</a>
+        </li>
+        <li>
+            <a class="nav-link" href="#Built-In_Datatypes">Built-In Datatypes</a>
+        </li>
+        <li>
+            <a class="nav-link" href="#Booleans">Booleans</a>
+        </li>
+        <li>
+            <a class="nav-link" href="#Numbers">Numbers</a>
+        </li>
+        <li>
+            <a class="nav-link" href="#Characters">Characters</a>
+        </li>
+        <li>
+            <a class="nav-link" href="#Strings">Strings</a>
+        </li>
+        <li>
+            <a class="nav-link" href="#Reference">Reference</a>
+        </li>
+    </ul>
+</nav>
+<main id="main-doc">
+    <section class="main-section" id="Welcome_to_Racket">
+        <header>Welcome to Racket</header>
+        <article>
+            <p>
+                Depending on how you look at it, Racket is
+            </p>
+            <ul>
+                <li>
+                    a programming language—a dialect of Lisp and a descendant of Scheme;
+                </li>
+                <li>
+                    a family of programming languages—variants of Racket, and more; or
+                </li>
+                <li>
+                    a set of tools—for using a family of programming languages.
+                </li>
+            </ul>
+            <p>
+                Where there is no room for confusion, we use simply Racket.
+
+                Racket's main tools are:
+            </p>
+            <ul>
+                <li>
+                    <strong>racket</strong>, the core compiler, interpreter, and run-time system;
+                </li>
+                <li>
+                    <strong>DrRacket</strong>, the programming enviroment; and
+                </li>
+                <li>
+                    <strong>raco</strong>, a command-line tool for executing Racket commands that install packages, build libraries, and more.
+                </li>
+            </ul>
+            <p>
+                If you’re using DrRacket, you’ll need to choose the proper language, because DrRacket accommodates many different variants of Racket, as well as other languages. 
+                Assuming that you’ve never used DrRacket before, start it up, type the line.
+                <code>#lang racket</code>
+                in DrRacket’s top text area, and then click the Run button that’s above the text area. DrRacket then understands that you mean to work in the normal variant of Racket
+            </p>
+        </article>
+    </section>
+    <section class="main-section" id="Built-In_Datatypes">
+        <header>Built-In Datatypes</header>
+        <article>
+            <p>
+                The previous chapter introduced some of Racket's built In datatypes: numbers, booleans, strings, lists, and procedures. This section provides a more complete coverage of the built-in datatypes for simple forms of data.
+            </p>
+        </article>
+    </section>
+    <section class="main-section" id="Booleans">
+        <header>Booleans</header>
+        <article>
+            <p>
+                Racket has two distinguished constants to represent boolean values: #t for true and #f for false. Uppercase #T and #F are parsed as the same values, but the lowercase forms are preferred.
+
+The boolean? procedure recognizes the two boolean constants. In the result of a test expression for if, cond, and, or, etc., however, any value other than #f counts as true.
+
+Examples:
+<code>
+    > (= 2 (+ 1 1))
+    #t
+    > (boolean? #t)
+    #t
+    > (boolean? #f)
+    #t
+    > (boolean? "no")
+    #f
+    > (if "no" 1 0)
+    1 
+</code>
+            </p>
+        </article>
+    </section>
+    <section class="main-section" id="Numbers">
+        <header>Numbers</header>
+        <article>
+            <p>
+                A Racket number is either exact or inexact:
+            </p>
+            <ul>
+                <li>
+                    An exact number is either
+                    <ul>
+                    <li>
+                        an arbitrarily large or small interger, such as 5,999999999999, or -17;
+                    </li>
+                    <li>
+                        a rational that is exactly the ratio of two arbitrarily small or large intergers, such as 1/2, 9999999999999999/2, or -3/4; or
+                    </li>
+                    <li>
+                        a complex number with exact real and imaginary parts (where the imaginary part is not zero), such as 1+2i or 1/2+3/4i.
+                    </li>
+                    </ul>
+                </li>
+                <li>
+                    An inexact number is either
+                    <ul>
+                        <li>
+                            an IEEE floating-point representation of a number, such as 2.0 or 3.14e+87, where the IEEE infinities and not-a-number are written +inf.0, -inf.0, and +nan.0 (or -nan.0); or
+                        </li>
+                        <li>
+                            a complex number with real and imaginary parts that are IEEE floating-point representations, such as 2.0+3.0i or -inf.0+nan.0i; as a special case, an inexact complex number can have an exact zero real part with an inexact imaginary part.
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <p>
+                Inexact numbers print with a decimal point or exponent specifier, and exact numbers print as integers and fractions. The same conventions apply for reading number constants, but #e or #i can prefix a number to force its parsing as an exact or inexact number. The prefixes #b, #o, and #x specify binary, octal, and hexadecimal interpretation of digits.
+                Examples:
+                <code>
+                    > 0.5
+0.5
+
+> #e0.5
+1/2
+
+> #x03BB
+955
+                </code>Inexact results are also produced by procedures such as sqrt, log, and sin when an exact result would require representing real numbers that are not rational. Racket can represent only rational numbers and complex numbers with rational parts.
+            </p>
+        </article>
+    </section>
+    <section class="main-section" id="Characters">
+        <header>Characters</header>
+        <article>
+            <p>
+                A Racket character corresponds to a Unicode scalar value. Roughly, a scalar value is an unsigned integer whose representation fits into 21 bits, and that maps to some notion of a natural-language character or piece of a character. Technically, a scalar value is a simpler notion than the concept called a “character” in the Unicode standard, but it’s an approximation that works well for many purposes. For example, any accented Roman letter can be represented as a scalar value, as can any common Chinese character.
+
+Although each Racket character corresponds to an integer, the character datatype is separate from numbers. The char->integer and integer->char procedures convert between scalar-value numbers and the corresponding character.
+
+A printable character normally prints as #\ followed by the represented character. An unprintable character normally prints as #\u followed by the scalar value as hexadecimal number. A few characters are printed specially; for example, the space and linefeed characters print as #\space and #\newline, respectively.
+Examples:
+<code>
+    > (integer->char 65)
+#\A
+
+> (char->integer #\A)
+65
+
+> #\λ
+#\λ
+
+> #\u03BB
+#\λ
+
+> (integer->char 17)
+#\u0011
+
+> (char->integer #\space)
+32
+</code>
+The display procedure direclty writes a character to the current output port (see Input and Output), in contrast to the character-constant syntax used to print a character result.
+Examples:
+<code>
+    > #\A
+#\A
+
+> (display #\A)
+A
+</code>
+            </p>
+        </article>
+    </section>
+    <section class="main-section" id="Strings">
+        <header>Strings</header>
+        <article>
+            <p>
+                A string is a fixed-length array of characters. It prints using double quotes, where double quote and backslash characters within the string are escaped with backslashes. Other common string escapes are supported, including \n for a linefeed, \r for a carriage return, octal escapes using \ followed by up to three octal digits, and hexadecimal escapes with \u (up to four digits). Unprintable characters in a string are normally shown with \u when the string is printed.
+
+                The display procedure directly writes the characters of a string to the current output port (see Input and Output), in contrast to the string-constant syntax used to print a string result.
+
+Examples:
+                <code>
+                    > "Apple"
+"Apple"
+
+> "\u03BB"
+"λ"
+
+> (display "Apple")
+Apple
+
+> (display "a \"quoted\" thing")
+a "quoted" thing
+
+> (display "two\nlines")
+two
+
+lines
+
+> (display "\u03BB")
+λ
+                </code>
+            </p>
+            <p>For working with plain ASCII, working with raw bytes, or encoding/decoding Unicode strings as bytes, use byte strings.</p>
+        </article>
+    </section>
+    <section class="main-section" id="Reference">
+        <header>Reference</header>
+        <article>
+            <ul>
+                <li>
+                    All the documentaion in this page is taken from the racket api
+                    <a href="https://docs.racket-lang.org/guide/index.html" target="_blank>\">RacketAPI</a>
+                </li>
+            </ul>
+        </article>
+    </section>
+</main>
+<link rel="stylesheet" href="stylesracket.css">        
